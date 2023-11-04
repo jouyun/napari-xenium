@@ -1,0 +1,10 @@
+name: napari-xenium
+display_name: Xenium Visualizer
+contributions:
+  commands:
+    - id: napari-xenium.make_cellpose_widget
+      python_name: napari_xenium._widget:XeniumWidget
+      title: Make Xenium Widget
+  widgets:
+    - command: napari-xenium.make_cellpose_widget
+      display_name: Visualizer
