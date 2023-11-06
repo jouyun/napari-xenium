@@ -1,0 +1,10 @@
+matplotlib
+scanpy
+leidenalg
+pandas
+scikit-image
+scipy
+numpy
+opencv-python
+pyarrow
+imagecodecs
