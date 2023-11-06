@@ -17,11 +17,6 @@ https://napari.org/stable/plugins/index.html
 
 ## Installation
 
-You will eventually install `napari-xenium` via [pip]:
-
-    pip install napari-xenium
-
-
 
 To install latest development version :
 
