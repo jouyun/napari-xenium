@@ -8,4 +8,5 @@ numpy
 opencv-python
 pyarrow
 imagecodecs
+PyQt5
 napari
