@@ -8,9 +8,6 @@ import skimage.segmentation as segmentation
 import skimage.util as util
 import matplotlib
 import os
-import plotly.express as px
-import os
-import gzip
 import shutil
 import cv2
 
