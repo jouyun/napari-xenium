@@ -1,7 +1,7 @@
 # napari-xenium
 
 
-A plugin for opening a directory of a Xenium dataset in napari.  The plugin will use scanpy to find clusters and display them as labels.  The plugin will also display the expression of a gene in the dataset as a layer.  The UMAP is shown as a plot object which can be drawn on to find sub-clusters.
+A plugin for opening a directory of a Xenium dataset in napari.  The plugin will use scanpy to find clusters and display them as labels.  The plugin will also display the expression of a gene in the dataset as a layer.  The UMAP is shown as a plot object which can be drawn on to find sub-clusters (this aspect is drawn heavily from the awesome https://github.com/BiAPoL/napari-clusters-plotter).
 
 ----------------------------------
 
