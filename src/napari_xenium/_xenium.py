@@ -240,23 +240,30 @@ def load_xenium_data(directory, resolution=1.5):
     Returns:
     Tuple[pandas.DataFrame, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, anndata.AnnData]: The transcript data, DAPI image, nucleus label image, cell label image, Leiden cluster label image, cluster label image, and AnnData object.
     """
+    print("Loading transcripts.")
     trans_df = get_transcripts(directory)
+    print("Transcripts loaded.")
     orig_img = get_DAPI_img(directory)
+    print("DAPI image loaded.")
 
     if not os.path.exists(directory + 'cell_feature_matrix_clustered.h5ad'):
         cell_df = get_cell_df(directory)
         adata = get_adata(directory, cell_df)
-        adata = make_leiden(adata, resolution=resolution)
+        print("Making leiden clusters.")
+        adata = make_leiden(adata, resolution=resolution, min_counts=10)
         adata.obs['number'] = np.arange(1, adata.obs.shape[0]+1)
+        print("Leiden clusters made.")
         adata.write(directory + 'cell_feature_matrix_clustered.h5ad')
     else:
         adata = sc.read_h5ad(directory + 'cell_feature_matrix_clustered.h5ad')
+        print("AnnData loaded.")
 
     nuclear_img, cell_img = get_label_masks(directory, orig_img, adata)
-
+    print("Label masks loaded.")
     
     leiden_img = util.map_array(cell_img.astype(int), adata.obs['number'].values, 1+(adata.obs['leiden'].astype(int).values))
     cluster_img = util.map_array(cell_img.astype(int), adata.obs['number'].values, 1+(adata.obs['Cluster'].astype(int).values))
+    print("Label images made.")
 
     return trans_df, orig_img, nuclear_img, cell_img, leiden_img, cluster_img, adata
 

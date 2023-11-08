@@ -124,7 +124,7 @@ class PlotFigureCanvas(FigureCanvas):
             self.axes.set_ylim(self.xylim[1])
 
     def on_draw(self, event):
-        print('Called draw')
+        a = 5
         #self.last_xy_labels = (self.axes.get_xlabel(), self.axes.get_ylabel())
         #self.xylim = (self.axes.get_xlim(), self.axes.get_ylim())
     

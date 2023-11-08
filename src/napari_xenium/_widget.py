@@ -26,7 +26,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import pandas as pd
 from ._visualize import SelectFromCollection
 from ._visualize import PlotFigureCanvas
-import napari_xenium._xenium as xenium
+from ._xenium import load_xenium_data, show_subset, visualize_by_transcript, visualize_gene_by_cell_w_boundaries, visualize_gene_by_cell
 from qtpy.QtWidgets import QComboBox, QCompleter
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QListWidget
@@ -73,7 +73,7 @@ class XeniumWidget(QWidget):
         def plot_update(inside):
             inside = np.array(inside)  # leads to errors sometimes otherwise
 
-            xenium.show_subset(self.adata, inside, self.cell_img, self.viewer)
+            show_subset(self.adata, inside, self.cell_img, self.viewer)
 
         # Add a figure widget
         self.figure_widget = PlotFigureCanvas(self.figure, plot_update=plot_update, width=5, height=5)
@@ -104,7 +104,7 @@ class XeniumWidget(QWidget):
         #data_directory = 'U:/smc/public/SMC/Xenium/pat/output-XETG00063__0010721__Region_1__20231011__183002/'
         data_directory = QFileDialog.getExistingDirectory(self, "Select Directory") + '/'
         self.dir_field.setText(data_directory)
-        self.trans_df, self.orig_img, self.nuclear_img, self.cell_img, self.leiden_img, self.cluster_img, self.adata = xenium.load_xenium_data(data_directory, resolution=float(self.num_field.text()))
+        self.trans_df, self.orig_img, self.nuclear_img, self.cell_img, self.leiden_img, self.cluster_img, self.adata = load_xenium_data(data_directory, resolution=float(self.num_field.text()))
         self.viewer.add_image(self.orig_img, name='original')
         self.viewer.add_labels(self.nuclear_img, name='nucleus_boundaries')
         self.viewer.add_labels(self.cell_img, name='cell_boundaries')
@@ -131,6 +131,6 @@ class XeniumWidget(QWidget):
         selected_gene = self.gene_list_widget.currentItem().text()
 
         # Do something with the selected gene
-        xenium.visualize_gene_by_cell_w_boundaries(self.adata, selected_gene, self.cell_img, self.viewer)
-        xenium.visualize_by_transcript(self.trans_df, selected_gene, self.viewer)
+        visualize_gene_by_cell_w_boundaries(self.adata, selected_gene, self.cell_img, self.viewer)
+        visualize_by_transcript(self.trans_df, selected_gene, self.viewer)
         print(f"Selected gene: {selected_gene}")
