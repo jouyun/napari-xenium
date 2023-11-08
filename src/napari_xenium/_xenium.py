@@ -215,7 +215,7 @@ def get_label_masks(directory, orig_img, adata):
     Tuple[numpy.ndarray, numpy.ndarray]: The label masks for the nucleus and cell boundaries.
     """
     if not os.path.exists(directory + 'nucleus_boundaries.npy'):
-        bounds_df = pd.read_parquet(directory + 'cell_boundaries.parquet')
+        bounds_df = pd.read_parquet(directory + 'nucleus_boundaries.parquet')
         nuclear_img = make_label_img(directory, orig_img, bounds_df, adata)
         np.save(directory + 'nucleus_boundaries.npy', nuclear_img)
     else:
